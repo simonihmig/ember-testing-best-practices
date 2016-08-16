@@ -1,0 +1,69 @@
+/**
+ * kaliber5 theme for reveal.js.
+ *
+ * By Simon Ihmig
+ */
+
+
+// Default mixins and settings -----------------
+@import "../template/mixins";
+@import "../template/settings";
+// ---------------------------------------------
+
+
+// kaliber5 CI
+$primaryColor: #ef5a31;
+$secondaryColor: #7bba1d;
+$grayColor: #54514F;
+
+// Override theme settings (see ../template/settings.scss)
+$backgroundColor: #fff;
+
+$mainColor: $grayColor;
+$headingColor: $grayColor;
+
+$mainFontSize: 38px;
+$mainFont: 'myriad-pro', Helvetica, sans-serif;
+$headingFont: 'myriad-pro', Helvetica, sans-serif;
+$headingTextShadow: none;
+$headingLetterSpacing: normal;
+$headingTextTransform: uppercase;
+$headingFontWeight: 600;
+$linkColor: $primaryColor;
+$linkColorHover: darken( $linkColor, 15% );
+$selectionBackgroundColor: lighten( $linkColor, 25% );
+
+$heading1Size: 2.0em;
+$heading2Size: 1.4em;
+$heading3Size: 1.2em;
+$heading4Size: 1.0em;
+
+section.has-dark-background {
+	&, h1, h2, h3, h4, h5, h6 {
+		color: #fff;
+	}
+}
+
+// Theme template ------------------------------
+@import "../template/theme";
+// ---------------------------------------------
+
+.reveal .progress span {
+	background: $secondaryColor;
+}
+
+body:after {
+	content: "";
+	width: 200px;
+	height: 62px;
+	position: absolute;
+	top: 20px;
+	left: 20px;
+	background: url(../../img/k5logo@2x.png) no-repeat;
+	background-size: 200px 62px;
+	z-index: 1;
+}
+
+@import "kaliber5/hljs";
+
+

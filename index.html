@@ -6,11 +6,11 @@
 
 		<title>reveal.js</title>
 
-		<link rel="stylesheet" href="css/reveal.css">
-		<link rel="stylesheet" href="css/theme/black.css">
+		<script src="https://use.typekit.net/dkq5epu.js"></script>
+		<script>try{Typekit.load({ async: true });}catch(e){}</script>
 
-		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="lib/css/zenburn.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/kaliber5.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -24,8 +24,41 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<section>
+					<h1>Headline</h1>
+					<h2>Subline</h2>
+				</section>
+				<section>
+					<h1>About me</h1>
+					<h2>Max Mustermann</h2>
+
+					<dl>
+						<dt>Working title</dt>
+						<dd>Web Developer @ kaliber5</dd>
+						<dt>Twitter</dt>
+						<dd>@maxmustermann</dd>
+					</dl>
+				</section>
+				<section data-markdown>
+					<script type="text/template">
+						## Real content comes here
+
+						Some text
+
+						```js
+						test('just some dummy code example', function(assert) {
+							let names = ['foo', 'bar'],
+							call(names.map(function(name) {
+								return name.toUpperCase()
+							});
+						});
+						```
+
+					</script>
+				</section>
+				<section>
+					<h1>Thank you</h1>
+				</section>
 			</div>
 		</div>
 
