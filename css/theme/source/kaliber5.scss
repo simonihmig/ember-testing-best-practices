@@ -60,9 +60,18 @@ body:after {
 	top: 20px;
 	left: 20px;
 	background: url(../../img/k5logo@2x.png) no-repeat;
-	background-size: 200px 62px;
+	background-size: contain;
 	z-index: 1;
+
+	@media (max-width: 767px) {
+		& {
+			width: 100px;
+			height: 31px;
+		}
+	}
 }
+
+
 
 @import "kaliber5/hljs";
 @import "kaliber5/id-card";
