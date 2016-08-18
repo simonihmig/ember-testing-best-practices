@@ -358,3 +358,55 @@ body:after {
 
 .hljs-strong {
   font-weight: bold; }
+
+.reveal .id-card {
+  position: relative;
+  border-radius: 1em;
+  overflow: hidden;
+  min-height: 12em;
+  -webkit-box-shadow: 8px 9px 22px 0px rgba(0, 0, 0, 0.39);
+  -moz-box-shadow: 8px 9px 22px 0px rgba(0, 0, 0, 0.39);
+  box-shadow: 8px 9px 22px 0px rgba(0, 0, 0, 0.39);
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e5e5e5+100;White+3D */
+  background: #ffffff;
+  /* Old browsers */
+  background: linear-gradient(to right, #ffffff 0%, #e5e5e5 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */ }
+  .reveal .id-card:before {
+    content: "kaliber5";
+    background: #ef5a31;
+    display: block;
+    color: #fff;
+    height: 2em;
+    line-height: 2em;
+    margin-bottom: 1em;
+    text-align: left;
+    padding: 0 1em; }
+  .reveal .id-card img {
+    border: none;
+    margin: 0;
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    width: 20%;
+    padding: 5px;
+    background: #fff;
+    border-radius: 5px; }
+  .reveal .id-card dl {
+    display: block;
+    font-size: 30.4px;
+    line-height: 1.6em; }
+    .reveal .id-card dl dt {
+      float: left;
+      width: 5em;
+      overflow: hidden;
+      clear: left;
+      text-align: right;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      text-transform: uppercase; }
+    .reveal .id-card dl dd {
+      margin-left: 6em; }
+  .reveal .id-card a {
+    color: #54514F;
+    border-bottom: dashed 1px #54514F; }
