@@ -24,10 +24,14 @@
 	<body>
 		<div class="reveal">
 			<div class="slides">
-				<section>
-					<h1>Headline</h1>
-					<h2>Subline</h2>
+				<section data-transition="none">
+					<h1>Ember.js Testing</h1>
+					<h2>Best Practises</h2>
 				</section>
+                <section data-transition="none-in zoom-out">
+                    <h1>Ember.js Testing</h1>
+                    <h2 style="position: relative"><del style="color: red">Best</del><span style="transform: rotate(-5deg); position: absolute; top: 1em; left: 50%; margin-left: -150px">Our</span> Practises</h2>
+                </section>
 				<section>
 
 					<div class="id-card">
@@ -50,23 +54,353 @@
 					</div>
 
 				</section>
-				<section data-markdown>
-					<script type="text/template">
-						## Real content comes here
 
-						Some text
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Replace QUnit with Mocha/Chai
 
-						```js
-						test('just some dummy code example', function(assert) {
-							let names = ['foo', 'bar'],
-							call(names.map(function(name) {
-								return name.toUpperCase()
-							});
-						});
-						```
+                            ```bash
+                            ember install ember-cli-mocha
+                            ```
+                        </script>
+                    </section>
 
-					</script>
-				</section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Pros
+                            * Chai gives you more powerful and expressive assertions
+                            * Chai plugins allow for extensability
+
+                            ### Cons
+                            * QUnit comes with a much better web interface
+
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Chai assertions
+
+                            * three different styles: `assert`, `expect`, `should`
+                            * powerful, expressive assertions:
+                            ```js
+                            expect(foo).to.be.a('string');
+                            expect(foo).to.equal('bar');
+                            expect(foo).to.have.length(3);
+                            expect(tea).to.have.property('flavors')
+                              .with.length(3);
+                            ```
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Promise support
+                            * return a promise to let your test wait for the promise to resolve
+                            * add chai-as-promised to add custom chai assertions:
+                            ```js
+                            expect(promise).to.be.fulfilled;
+                            expect(promise).to.be.rejected;
+                            ```
+                            * drop in the `eventually` keyword to test the resolved promise value:
+                            ```js
+                            expect(promise).to.eventually.equal(true)
+                            expect(promise).to.eventually.have.length.of.at.least(3);
+                            expect(promise).to.eventually.have.property('error', false);
+                            ```
+
+                        </script>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Sinon
+
+                            * Sinon is a mocking library
+                            * provides spies, stubs and mocks
+
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### sinon-chai
+
+                            * sinon comes with its own assertions
+                            * sinon-chai integrates those nicely with chai:
+                            ```js
+                            expect(spy).to.have.been.calledOnce;
+                            expect(spy).to.have.been.calledWith('first','second');
+                            expect(stub).to.have.returned(true);
+                            // and many more
+                            ```
+
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Use cases
+
+                            * isolate services etc. in unit tests
+                            * test for action in component tests
+
+                            ```js
+                            let action = sinon.spy();
+                            let model = { foo: 'bar' }
+                            this.on('action', action);
+                            this.render(hbs`{{my-component model=model action=(action "action")}}`);
+
+                            expect(action).to.not.have.been.called;
+                            this.$('button').click();
+                            expect(action).to.have.been.calledWith(model);
+                            ```
+
+                        </script>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## ember-cli-mirage
+
+                            ```bash
+                            ember install ember-cli-mirage
+                            ```
+
+                            * client-side fake server for your API
+                            * intercepts all AJAX requests to return its own faked response
+                            * run your acceptance test without a backend
+                            * optimized for ember-data and JSON:API
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### lightweight ORM
+
+                            * define models
+                            * add relationships (still incomplete though)
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### define your API routes:
+
+                                this.get('/posts');
+                                this.post('/comments');
+                                this.get('/status', function() {
+                                  // define your custom response
+                                });
+
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Factories
+
+                            * define default property values
+                            * comes with faker.js
+
+
+                                // mirage/factories/user.js
+                                export default Factory.extend({
+                                  role: 'user',
+                                  age(i) {
+                                    return i + 20;
+                                  },
+                                  firstName() {
+                                    return faker.name.firstName();
+                                  }
+                                });
+
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Seed your databse
+
+                            Create a custom database state for each test
+
+
+                                server.create('user');
+                                server.createList('user', 10);
+                                server.createList('user', 10, {
+                                  firstName: 'Simon'
+                                );
+
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Great with ember-cli-yadda
+
+                            Define reusable steps for seeding your database:
+
+
+                                // Example: "Given there are 50 blog-posts in my database"
+                                .given('there (?:are|is) ?([0-9]*) ([a-z\-]+)(?: models)? in
+                                  my database', function(count, model) {
+                                  count = parseInt(count) || 10;
+                                  model = singularize(model);
+                                  server.createList(model, count);
+                                })
+
+                        </script>
+                    </section>
+
+                </section>
+
+                <section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Page Object
+
+                            * Page Object Pattern, see Martin Fowler's [definition](http://martinfowler.com/bliki/PageObject.html)
+                            * Decouples your test implementation from your HTML structure
+                            * Test -> PageObject -> HTML/DOM
+                            * changes in your HTML only affect the PageObject, not all your tests!
+
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### ember-cli-page-object
+
+                            ```bash
+                            ember install ember-cli-page-object
+                            ```
+
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Actions
+
+
+                                // tests/pages/blog.js
+                                export default PageObject.create({
+                                  visit: visitable('/blog'),
+                                  comment: fillable('input[name=comment]'),
+                                  submit: clickable('button')
+                                });
+
+                                // tests/acceptance/blog-test.js
+                                pageObject.visit()
+                                  .comment('bla bla')
+                                  .submit();
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Predicates, queries
+
+
+                                // tests/pages/blog.js
+                                export default PageObject.create({
+                                  title: text('h1'),
+                                  isActive: hasClass('active')
+                                  enteredText: value('input')
+                                });
+
+                                // tests/acceptance/blog-test.js
+                                expect(pageObject.text).to.equal('Blog');
+                                ...
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### Collections
+
+
+                                // tests/pages/blog.js
+                                export default PageObject.create({
+                                  comments: collection({
+                                    scope: '.comment-list',
+                                    itemScope: '.comment',
+                                    item: {
+                                      text: text('p'),
+                                      delete: clickable('button.delete')
+                                    }
+                                  });
+                                });
+
+                                // tests/acceptance/blog-test.js
+                                expect(pageObject.comments().count).to.equal(5);
+                                expect(pageObject.comments(0).text).to.equal('test');
+                                pageObject.comments(1).delete();
+                                ...
+                        </script>
+                    </section>
+
+                </section>
+
+                <section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## Use data attributes for your tests
+
+                            * IDs are - in general - not needed in Ember apps
+                            * classes are meant to be used for styling
+                            * and are subject to change!
+                            * so use data attributes to identify DOM elements for testing
+
+                            ```html
+                            <button class="btn btn-danger" data-test-selector="delete">Delete</button>
+                            ```
+
+                            In your test / page object class:
+
+                            ```js
+                            export default PageObject.create({
+                              delete: clickable('[data-test-selector="delete"]')
+                            });
+                            ```
+
+                        </script>
+                    </section>
+
+                    <section data-markdown>
+                        <script type="text/template">
+                            ### ember-test-selectors
+
+                            ```bash
+                            ember install ember-test-selectors
+                            ```
+
+                            Adds a test helper to select elements:
+
+                            ```js
+                            export default PageObject.create({
+                              delete: clickable(testSelector('selector', 'delete'))
+                            });
+                            ```
+
+                            Even better: it removes all `data-test-*` attributes in your templates from your production
+                            build!
+
+                        </script>
+                    </section>
+
+                </section>
+
 				<section>
 					<h1>Thank you</h1>
 				</section>
